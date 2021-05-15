@@ -54,9 +54,9 @@ public class InventorySystem {
     }
      
        private void addItems(){
-        inventory.put("Mango", new Item(new ItemDTO(new Amount(20), "mango", new Amount(10)), "Mango", new Amount(Integer.MAX_VALUE)));
+        inventory.put("Mango", new Item(new ItemDTO(new Amount(20), "Mango", new Amount(10)), "Mango", new Amount(Integer.MAX_VALUE)));
         inventory.put("Ananas", new Item(new ItemDTO(new Amount(30), "Ananas", new Amount(15)), "Ananas", new Amount(Integer.MAX_VALUE)));
-        inventory.put("Salladslök", new Item(new ItemDTO(new Amount(42), "Salladslök", new Amount(20)), "Salladslök", new Amount(Integer.MAX_VALUE)));
+        inventory.put("Sallad", new Item(new ItemDTO(new Amount(42), "Sallad", new Amount(20)), "Sallads", new Amount(Integer.MAX_VALUE)));
         inventory.put("Ostron", new Item(new ItemDTO(new Amount(5), "Ostron", new Amount(2)), "Ostron", new Amount(Integer.MAX_VALUE)));
     }
       

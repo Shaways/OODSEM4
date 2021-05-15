@@ -1,5 +1,7 @@
 package se.kth.iv1350.sem3.model;
 
+import java.util.Objects;
+
 public class CustomerID {
   private String customerIDNmbr;  
 
@@ -20,6 +22,20 @@ public class CustomerID {
      */
     public String getCustomerIDNumber() {
         return customerIDNmbr;
+    }
+     @Override
+    public boolean equals(Object obj) {
+        if (obj == null){
+            return false;
+        }
+        if (getClass() != obj.getClass()){
+            return false;
+        }
+        final CustomerID other = (CustomerID) obj;
+        if (!Objects.equals(this.customerIDNmbr, other.customerIDNmbr)) {
+            return false;
+        }
+        return true;
     }
 
 }

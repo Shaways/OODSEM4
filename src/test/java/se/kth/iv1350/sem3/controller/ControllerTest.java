@@ -42,7 +42,7 @@ public class ControllerTest {
         Amount price = new Amount(49.9);
         Amount VAT = new Amount(10.0);
         controller.registerItem(nameOfItem, new Amount(3));
-        String result = controller.displayTotalWithTax();
+        String result = controller.displayTotalWithVAT();
         String expResult = "total inclusive VAT: " + price.plus(VAT);
         assertEquals(expResult, result, "Total inclusive VAT from sale is not equal to the expected result.");
     }

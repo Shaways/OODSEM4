@@ -1,5 +1,7 @@
 package se.kth.iv1350.sem3.integration;
 
+import se.kth.iv1350.sem3.model.Receipt;
+
 /**
  * A class that defines a printer.
  */

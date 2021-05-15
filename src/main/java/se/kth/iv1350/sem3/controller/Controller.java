@@ -7,7 +7,7 @@ import se.kth.iv1350.sem3.integration.InventorySystem;
 import se.kth.iv1350.sem3.integration.Item;
 import se.kth.iv1350.sem3.integration.ItemList;
 import se.kth.iv1350.sem3.integration.Printer;
-import se.kth.iv1350.sem3.integration.Receipt;
+import se.kth.iv1350.sem3.model.Receipt;
 import se.kth.iv1350.sem3.integration.SystemCreator;
 import se.kth.iv1350.sem3.model.Amount;
 import se.kth.iv1350.sem3.model.CashRegister;
@@ -56,12 +56,12 @@ public class Controller {
      *
      * @return The result as a String, of the total with VAT.
      */
-    public String displayTotalWithTax(){
-        return "total cost inclusive VAT: " + sale.getTotal().getTotalTogetherWithVAT().toString();
+    public String displayTotalWithVAT(){
+        return "Total cost inclusive VAT: " + sale.getTotal().getTotalTogetherWithVAT().toString();
     }
     
     private String displayTotal(){
-        return sale.getTotal().toString();
+        return sale.getTotal().getTotal().toString();
     }
     
     /**
@@ -78,11 +78,11 @@ public class Controller {
     
 
     public String registerItem(String itemID, Amount itemQuantity){
-        
+     
         if (itemList.itemAvailable(itemID)){
             
             Item item = itemList.getItem(itemID, itemQuantity);
-            return sale.updateCurrentSale(item) + ", Item quantity: " + itemQuantity.toString() +
+            return sale.updateCurrentSale(item) + "Item quantity: " + itemQuantity.toString() +
                     ", current total: " + displayTotal();
         }
         return "current total: " + displayTotal();

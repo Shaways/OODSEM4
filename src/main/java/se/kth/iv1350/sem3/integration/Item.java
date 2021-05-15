@@ -13,7 +13,7 @@ public class Item {
      * 
      * @param itemQuantity The quantity of Items.
      * @param itemDescription Info about Item.
-     * @param itemIdentifier ID of Item.
+     * @param itemID ID of Item.
      * 
      */
     
@@ -61,5 +61,29 @@ public class Item {
                 ("item description: " + itemDescription.toString());
         return string;
     }
+    /**
+     * Two <code>Item</code> instances are equal if all fields are equal except the quantity.
+     *
+     * @param obj The <code>Item</code> to compare with this <code>Item</code>.
+     * @return <code>true</code> if all fields in the specified <code>Item</code> are equal to
+     *         corresponding fields in this <code>Item</code> except quantity, <code>false</code> if they are not.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null){
+            return false;
+        }
+        if (getClass() != obj.getClass()){
+            return false;
+        }
+        final Item other = (Item) obj;
+        if (!this.itemDescription.equals(other.itemDescription)){
+            return false;
+        }
+        if (!this.itemID.equals(other.itemID)){
+            return false;
+        }
+        return true;
 
+    }
 }

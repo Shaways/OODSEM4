@@ -43,10 +43,10 @@ public class ItemList {
     }
     
     private void addItem(){
-        itemList.put("Gurka", new ItemDTO(new Amount(20), "Gurka", new Amount(10)));
-        itemList.put("Hammer", new ItemDTO(new Amount(30), "Hammer", new Amount(15)));
-        itemList.put("Mango", new ItemDTO(new Amount(42), "Mango", new Amount(20)));
-        itemList.put("Sausage", new ItemDTO(new Amount(5), "Sausage", new Amount(2)));
+        itemList.put("Mango", new ItemDTO(new Amount(20), "Mango", new Amount(10)));
+        itemList.put("Sallad", new ItemDTO(new Amount(30), "Sallad", new Amount(15)));
+        itemList.put("Ananas", new ItemDTO(new Amount(42), "Ananas", new Amount(20)));
+        itemList.put("Ostron", new ItemDTO(new Amount(5), "Ostron", new Amount(2)));
     }
     
 }

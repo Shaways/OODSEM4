@@ -7,7 +7,7 @@ import se.kth.iv1350.sem3.model.DiscountRules;
 
 public class DiscountList {
     private HashMap<CustomerID, DiscountRules> ListOfDiscounts = new HashMap<>();
-    private final double NO_DISCOUNT = 0.0;
+    private final double NO_DISCOUNT = 2.0;
     
     
     
