@@ -2,8 +2,8 @@
 package se.kth.iv1350.sem4.view;
 
 
-import Log.ConsoleLogHandler;
-import Log.LogHandler;
+import se.kth.iv1350.sem4.Log.ConsoleLogHandler;
+import se.kth.iv1350.sem4.Log.LogHandler;
 
 import se.kth.iv1350.sem4.controller.Controller;
 import se.kth.iv1350.sem4.controller.DatabaseFailedException;

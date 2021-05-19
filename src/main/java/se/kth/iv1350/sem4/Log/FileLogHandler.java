@@ -1,4 +1,4 @@
-package Log;
+package se.kth.iv1350.sem4.Log;
 
 import java.io.FileWriter;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package Log;
+package se.kth.iv1350.sem4.Log;
 
 /**
  * Handle all exceptions that will be logged and printed to the console

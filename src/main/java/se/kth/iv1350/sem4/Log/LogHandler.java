@@ -1,4 +1,4 @@
-package Log;
+package se.kth.iv1350.sem4.Log;
 
 import java.time.LocalDateTime;
 
