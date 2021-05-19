@@ -8,55 +8,76 @@ import se.kth.iv1350.sem3.integration.SystemCreator;
 import se.kth.iv1350.sem3.model.Amount;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
+import se.kth.iv1350.sem3.integration.ItemNotFoundException;
 
 public class ControllerTest {
-    private Controller controller;
+    private Controller contr;
     
     @BeforeEach
     public void setUp() {
-        controller = new Controller(new SystemCreator(), new ArchiveCreator(), new Printer());
+        contr = new Controller(SystemCreator.getSystemCreator(), ArchiveCreator.getArchiveCreator(), Printer.getPrinter());
     }
     
     @AfterEach
     public void tearDown() {
-        controller = null;
+        contr = null;
     }
     
     @Test
     public void registerItem() {
-        controller.startSale();
+        contr.startSale();
         String nameOfItem = "Mango";
         Amount price = new Amount(49.9);
         Amount VATrate = new Amount(10.0);
-        String result = controller.registerItem(nameOfItem, new Amount(1));
+        
+        try{
+        String result = contr.registerItem(nameOfItem, new Amount(1));
         String expResult = "Item: " + nameOfItem + "\n" +
                 "price: " + price + "\n" +
                 "VAT: " + VATrate + "\n" +
                 ", quantity: " + new Amount(2) + ", current total: " + price;
         assertEquals(expResult, result, "String from registerItem is not equal as String with the same state.");
+        }catch (DatabaseFailedException | ItemNotFoundException e){
+        }
     }
-     @Test
+        
+    @Test
     public void displayTotalInclVAT() {
-        controller.startSale();
+        contr.startSale();
+        
         String nameOfItem = "Mango";
         Amount price = new Amount(49.9);
         Amount VAT = new Amount(10.0);
-        controller.registerItem(nameOfItem, new Amount(3));
-        String result = controller.displayTotalWithVAT();
+        
+        try{
+        contr.registerItem(nameOfItem, new Amount(3));
+       }catch (DatabaseFailedException | ItemNotFoundException e){
+       }
+    
+       
+        
+        String result = contr.displayTotalWithVAT();
         String expResult = "total inclusive VAT: " + price.plus(VAT);
         assertEquals(expResult, result, "Total inclusive VAT from sale is not equal to the expected result.");
     }
+    
     @Test
     public void pay() {
-        controller.startSale();
+        contr.startSale();
         String nameOfItem = "Mango";
         Amount price = new Amount(49.9);
         Amount VAT = new Amount(10.0);
-        controller.registerItem(nameOfItem, new Amount(5));
+        
+        try{
+        contr.registerItem(nameOfItem, new Amount(5));
+        }catch (DatabaseFailedException | ItemNotFoundException e){
+            
+        }
         Amount amountPaid = new Amount(100);
         String expResult = "Change: " + amountPaid.minus(price.plus(VAT));
-        String result = controller.pay(amountPaid);
+        String result = contr.pay(amountPaid);
         assertEquals(expResult, result, "Change is not equal to amount with the same amount.");
     }
-}
+  }
+
     

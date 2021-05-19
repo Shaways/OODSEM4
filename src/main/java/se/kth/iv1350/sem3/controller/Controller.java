@@ -1,21 +1,27 @@
 package se.kth.iv1350.sem3.controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import se.kth.iv1350.sem3.integration.AccountingSystem;
 import se.kth.iv1350.sem3.integration.ArchiveCreator;
 import se.kth.iv1350.sem3.integration.DiscountList;
 import se.kth.iv1350.sem3.integration.InventorySystem;
 import se.kth.iv1350.sem3.integration.Item;
 import se.kth.iv1350.sem3.integration.ItemList;
+import se.kth.iv1350.sem3.integration.ItemListException;
+import se.kth.iv1350.sem3.integration.ItemNotFoundException;
 import se.kth.iv1350.sem3.integration.Printer;
 import se.kth.iv1350.sem3.model.Receipt;
 import se.kth.iv1350.sem3.integration.SystemCreator;
 import se.kth.iv1350.sem3.model.Amount;
 import se.kth.iv1350.sem3.model.CashRegister;
 import se.kth.iv1350.sem3.model.Payment;
+import se.kth.iv1350.sem3.model.PaymentObserver;
 import se.kth.iv1350.sem3.model.Sale;
 
 /**
- * This is the application's only controller. All Calls to the model pass through this class.
+ * This is the application's only controller where all calls to the model is passed through.
+ * 
  */
 public class Controller {
     private Sale sale;
@@ -23,15 +29,17 @@ public class Controller {
     private AccountingSystem accountingSystem;
     private Printer print;
     private DiscountList discountList;
-    private ItemList itemList;
+    private final ItemList itemList;
     private CashRegister cashRegister;
+    private List<PaymentObserver> paymentObservers = new ArrayList();
     
      /**
-     * A new instance is made, and is defined as a controller.
+     * A new instance is created, and is defined as a controller.
+     * The sales only controller where all calls to the model is passed through.
      *
      * @param system     To retrieve all the classes that deals with external system calls.
      * @param archCreator    To retrieve all the classes that deals with data base calls.
-     * @param print           Interface to printer.
+     * @param print           Printer.
      */
     
     public Controller(SystemCreator system, ArchiveCreator archCreator, Printer print){
@@ -41,8 +49,8 @@ public class Controller {
         this.accountingSystem = system.getAccountingSystem();
         this.inventorySystem = system.getInventorySystem();
         this.cashRegister = new CashRegister();
+        
     }
-    
     
 /**
  * Starts a new sale. This method must be called before doing anything else during a sale.
@@ -56,7 +64,8 @@ public class Controller {
      *
      * @return The result as a String, of the total with VAT.
      */
-    public String displayTotalWithVAT(){
+    public String displayTotalWithVAT() throws IllegalStateException{
+        controlIfSaleIsNull("displayTotalWithVAT");
         return "Total cost inclusive VAT: " + sale.getTotal().getTotalTogetherWithVAT().toString();
     }
     
@@ -74,40 +83,66 @@ public class Controller {
      * @return If the scanned item is there we return a string containing
      * details about the item and the current total,
      * if not, then we return a string with the running total.
+     * @throws IllegalStateException If this method is called before <code>startSale</code>
+     * @throws DatabaseFailedException If unable to register item identifier other than it doesn't exist.
+     * @throws ItemNotFoundException If the item identifier doesn't exist.
+     * 
      */
-    
 
-    public String registerItem(String itemID, Amount itemQuantity){
-     
-        if (itemList.itemAvailable(itemID)){
-            
+    public String registerItem(String itemID, Amount itemQuantity) throws DatabaseFailedException, ItemNotFoundException{
+      
+        controlIfSaleIsNull("registerItem");
+        
+        try {
             Item item = itemList.getItem(itemID, itemQuantity);
-            return sale.updateCurrentSale(item) + "Item quantity: " + itemQuantity.toString() +
-                    ", current total: " + displayTotal();
+            
+            return sale.updateCurrentSale(item) + ", quantity: " + itemQuantity.toString() +
+                    ", running total: " + displayTotal();
+            
+        }catch (ItemListException e){
+            
+            throw new DatabaseFailedException("Could not get the item.", e);
         }
-        return "current total: " + displayTotal();
+
     }
     
-     /**
-     * The assigned Amount is used to make a payment.
-     * Will be credited to the cashRegister's balance.
-     * The printer can produce and print receipt, after
-     * the external system has been updated.
+    /**
+     * Goes ahead and makes a payment with the given paidAmount. cashRegister will add ths amount to its balance. 
+     * External system will then be updated, and a receipt is then made and printed by a printer.
      *
-     * @param paidAmount Money that the customer gives to cashier.
-     * @return change back which is an amount that will be given back to the customer.
+     * @param paidAmount The amount of money given by the customer.
+     * @return The total change that will be given to the customer.
+     * @throws IllegalStateException If this method is called before <code>startSale</code>
      */
-    public String pay(Amount paidAmount){
-        Payment totalPayment = new Payment(paidAmount, sale.getTotal());
-        cashRegister.addPayment(totalPayment);
-        accountingSystem.bookKeep(sale);
+    public String pay(Amount paidAmount) throws IllegalStateException{
+        controlIfSaleIsNull("pay");
+        Payment payment = new Payment(paidAmount, sale.getTotal());
+        payment.addPaymentObservers(paymentObservers);
+        cashRegister.addPayment(payment);
+        accountingSystem.bookKeeping(sale);
         inventorySystem.updateInventory(sale);
         Receipt receipt = new Receipt(sale);
         print.printReceipt(receipt);
         sale = null;
-        return "Change back: " + totalPayment.getChange().toString();
+        return "Change back: " + payment.getChange().toString();
     }
+    
+ /**
+     * When a payment have been made, the specified observer will be notified of the total .
+     * Notifications will only be there after this method is called.
+     *
+     * @param paymentObserver Is the observer to notify.
+     */
+    public void addPaymentObserver(PaymentObserver paymentObserver){
+        paymentObservers.add(paymentObserver);
+    }
+    
+    private void controlIfSaleIsNull(String saleMethod){
+        if (sale == null){
+            throw new IllegalStateException("The call to " + saleMethod + " has been executed before initiating a new sale.");
+        }
 
+ }
 }
    
 

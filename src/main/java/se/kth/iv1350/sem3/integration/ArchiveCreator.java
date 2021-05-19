@@ -1,20 +1,23 @@
 
 package se.kth.iv1350.sem3.integration;
 
+/**
+ * A creator that consists of an archive of archives.
+ * Note that it is made as a singleton.
+ */
 
 public class ArchiveCreator {
-    private ItemList itemList;
-    private DiscountList discountList;
-   
+    private static final ArchiveCreator ARCHIVE_CREATOR = new ArchiveCreator();
+    private ItemList itemList = new ItemList();
+    private DiscountList discountList = new DiscountList() ;
     
-    /**
-     * Makes and creates new instance.
-     */
+   
     public ArchiveCreator(){
-        itemList = new ItemList();
-        discountList = new DiscountList();
     }
     
+     public static ArchiveCreator getArchiveCreator(){
+        return ARCHIVE_CREATOR;
+    }
      /**
      * A getter that retrieves the value that itemList holds.
      * @return  returns value of itemList.

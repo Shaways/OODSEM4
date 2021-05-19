@@ -7,7 +7,7 @@ public class Receipt {
     private Sale sale;
     
     /**
-     * Creates a new instance, representing a receipt.
+     * Makes a new instance, defining a receipt.
      *
      * @param sale The details shown on receipt.
      */
@@ -22,27 +22,27 @@ public class Receipt {
      */
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
-        addNewLine(builder);
-        appendLine(builder, "----------RECEIPT----------");
-        addLocalDate(builder);
-        appendLine(builder, "           \n -ITEMS- ");
-        appendLine(builder, sale.toString());
-        appendLine(builder, "------------END------------");
-        return builder.toString();
+        StringBuilder str = new StringBuilder();
+        addNewLine(str);
+        appendLine(str, "----------RECEIPT----------");
+        addLocalDate(str);
+        appendLine(str, "           \n -ITEMS- ");
+        appendLine(str, sale.toString());
+        appendLine(str, "------------END------------");
+        return str.toString();
     }
     
-    private void addNewLine(StringBuilder builder){
-        builder.append("\n");
+    private void addNewLine(StringBuilder str){
+        str.append("\n");
     }
     
-    private void appendLine(StringBuilder builder, String line){
-        builder.append(line);
-        addNewLine(builder);
+    private void appendLine(StringBuilder str, String line){
+        str.append(line);
+        addNewLine(str);
     }
     
-     private void addLocalDate(StringBuilder builder){
+     private void addLocalDate(StringBuilder str){
         LocalDateTime dateOfSale = LocalDateTime.now();
-        appendLine(builder, "Sale date: " + dateOfSale.toLocalDate().toString());
+        appendLine(str, "Sale date: " + dateOfSale.toLocalDate().toString());
     }
 }

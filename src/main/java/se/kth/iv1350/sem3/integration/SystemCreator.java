@@ -1,17 +1,27 @@
 package se.kth.iv1350.sem3.integration;
 
+/**
+ * A singleton object that initiates the systems needed for the application,
+ * accounting system and inventory system.
+ */
 
 public class SystemCreator {
-    private InventorySystem inventorySystem;
-    private AccountingSystem accountingSystem;
-     
+    private static final SystemCreator SYSTEM_CREATOR = new SystemCreator();
+    private AccountingSystem accountingSystem = new AccountingSystem();
+    private InventorySystem inventorySystem = new InventorySystem();
+    
     /**
      * Creates the system creator.
      */
     public SystemCreator(){
-        inventorySystem = new InventorySystem();
-        accountingSystem = new AccountingSystem();
-        
+    }
+    
+    /**
+     * Retrieves the instance of SystemCreator.
+     * @return the SystemCreator.
+     */
+    public static SystemCreator getSystemCreator(){
+        return SYSTEM_CREATOR;
     }
     
     
@@ -33,10 +43,5 @@ public class SystemCreator {
     public AccountingSystem getAccountingSystem() {
         return accountingSystem;
     }
-    
-    
-    
-    
-   
     
 }

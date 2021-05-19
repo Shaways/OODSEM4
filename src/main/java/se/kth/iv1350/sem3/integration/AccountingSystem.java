@@ -1,30 +1,29 @@
-
 package se.kth.iv1350.sem3.integration;
+
+
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import se.kth.iv1350.sem3.model.Sale;
 
 /**
- * Defines an accounting system.
+ * Represents an external made up accounting system
  */
 public class AccountingSystem {
     private HashMap<LocalDateTime, Sale> accounting = new HashMap();
-    
+
     /**
-     *  A new instance is created that defines an accounting System.
+     *  A new instance is made, representing a made up accounting system.
      */
     AccountingSystem(){ }
-    
+
     /**
-     * Adds the sale to the book keeping,
-     * also to the book keeping, it adds the period that the transaction was completed.
+     *  The sale is added to the book keeping. The date/time when the sale was done to the book keeping is also added.
      *
-     * @param sale The total and finished sale that will be put and 
-     * registered in to book keeping.
+     * @param sale The finished sale that will be added to the book keeping.
      */
-    public void bookKeep(Sale sale){
-        LocalDateTime timeOfSale = LocalDateTime.now();
-        accounting.put(timeOfSale, sale);
+    public void bookKeeping(Sale sale){
+        LocalDateTime saleTime = LocalDateTime.now();
+        accounting.put(saleTime, sale);
     }
 }

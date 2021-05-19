@@ -13,7 +13,7 @@ public class ItemListTest {
     
     @Test
     public void testItemAvailable() {
-        String sausage = "Sausage";
+        String sausage = "Mango";
         boolean expectedResult = true;
         ItemList itemList = new ItemList();
         boolean actualResult = itemList.itemAvailable(sausage);

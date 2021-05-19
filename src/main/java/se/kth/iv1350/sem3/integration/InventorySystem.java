@@ -8,16 +8,16 @@ import se.kth.iv1350.sem3.model.Amount;
 import se.kth.iv1350.sem3.model.Sale;
 
 /**
- * A class that makes calls to an external inventory system.
+ * A class that is made up and makes calls to an external inventory system.
  */
 public class InventorySystem {
      private HashMap<String, Item> inventory = new HashMap();
      
      /**
-     * Creates a new instance of a dummy inventory system.
+     * Makes a new instance of a made up inventory system.
      */
     InventorySystem(){
-        addItems();
+        addItem();
     }
     
      /**
@@ -39,7 +39,7 @@ public class InventorySystem {
         }
     }
     
-      private Item getCurrentItem(Object entry){
+    private Item getCurrentItem(Object entry){
         Map.Entry mapp = (Map.Entry) entry;
         return (Item) mapp.getValue();
     }
@@ -53,11 +53,13 @@ public class InventorySystem {
         inventory.put(oldItem.getItemID(), oldItem);
     }
      
-       private void addItems(){
-        inventory.put("Mango", new Item(new ItemDTO(new Amount(20), "Mango", new Amount(10)), "Mango", new Amount(Integer.MAX_VALUE)));
-        inventory.put("Ananas", new Item(new ItemDTO(new Amount(30), "Ananas", new Amount(15)), "Ananas", new Amount(Integer.MAX_VALUE)));
-        inventory.put("Sallad", new Item(new ItemDTO(new Amount(42), "Sallad", new Amount(20)), "Sallads", new Amount(Integer.MAX_VALUE)));
-        inventory.put("Ostron", new Item(new ItemDTO(new Amount(5), "Ostron", new Amount(2)), "Ostron", new Amount(Integer.MAX_VALUE)));
+       private void addItem(){
+        inventory.put("Mango", new Item(new ItemDTO(new Amount(11), "Mango", new Amount(5)), "Mango", new Amount(Integer.MAX_VALUE)));
+        inventory.put("Ananas", new Item(new ItemDTO(new Amount(12), "Ananas", new Amount(6)), "Ananas", new Amount(Integer.MAX_VALUE)));
+        inventory.put("Sallad", new Item(new ItemDTO(new Amount(23), "Sallad", new Amount(11)), "Sallad", new Amount(Integer.MAX_VALUE)));
+        inventory.put("Ostron", new Item(new ItemDTO(new Amount(2), "Ostron", new Amount(1)), "Ostron", new Amount(Integer.MAX_VALUE)));
+        
+       
     }
       
     

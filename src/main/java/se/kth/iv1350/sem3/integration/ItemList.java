@@ -33,20 +33,30 @@ public class ItemList {
      *
      * @param itemID The iD of an item.
      * @param itemQuantity The item quantity.
-     * @return One item with it's description and quantity amount, or null if the id is not there.
+     * @return One item with it's description and quantity amount.
+     * @throws ItemNotFoundException when item ID is not available in database.
      */
-    public Item getItem(String itemID, Amount itemQuantity){
-        if (itemAvailable(itemID)){
-            return new Item(itemList.get(itemID),itemID, itemQuantity);
+    public Item getItem(String itemID, Amount itemQuantity)throws ItemNotFoundException, ItemListException{
+        if (!itemAvailable(itemID)){
+            throw new ItemNotFoundException(itemID);
         }
-        return null;
+       Item newItem = new Item(itemList.get(itemID), itemID, itemQuantity);
+        if (newItem.getItemID() != itemID){
+            throw new ItemListException("The wrong item from database has been recieved");
+        }
+        if (newItem.getItemID() == "FAILURE"){
+            throw new ItemListException("The wrong item from database has been recieved");
+        }
+        return newItem;
     }
     
+    
     private void addItem(){
-        itemList.put("Mango", new ItemDTO(new Amount(20), "Mango", new Amount(10)));
-        itemList.put("Sallad", new ItemDTO(new Amount(30), "Sallad", new Amount(15)));
-        itemList.put("Ananas", new ItemDTO(new Amount(42), "Ananas", new Amount(20)));
-        itemList.put("Ostron", new ItemDTO(new Amount(5), "Ostron", new Amount(2)));
+        itemList.put("Mango", new ItemDTO(new Amount(11), "Mango", new Amount(10)));
+        itemList.put("Sallad", new ItemDTO(new Amount(12), "Sallad", new Amount(15)));
+        itemList.put("Ananas", new ItemDTO(new Amount(23), "Ananas", new Amount(20)));
+        itemList.put("Ostron", new ItemDTO(new Amount(2), "Ostron", new Amount(2)));
+        itemList.put("FAILURE", new ItemDTO(new Amount(0), "FAILURE", new Amount(0)));            
     }
     
 }

@@ -1,8 +1,8 @@
 package se.kth.iv1350.sem3.model;
 
+import java.util.Map;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Set;
 import se.kth.iv1350.sem3.integration.Item;
 
@@ -11,12 +11,12 @@ import se.kth.iv1350.sem3.integration.Item;
  * Makes one single sale made by one single customer and payed with one total payment.
  */
 public class Sale {
-    private HashMap<String, Item> itemsToPurchase = new HashMap<>();
     private Total total;
+    private HashMap<String, Item> itemsToPurchase = new HashMap<>();
     
     
     /**
-     * Creates new instance.
+     * Makes new instance.
      */
     public Sale() {
         total = new Total();
@@ -53,10 +53,12 @@ public class Sale {
         return item.getDescriptionOfItem().toString();
     }
     
+    
     private void addItemsThenUpdateTotal(Item item){
         itemsToPurchase.put(item.getItemID(), item);
         total.calculateTotal(item);
     } 
+    
     private boolean listOfItemsContains(Item item){
         return itemsToPurchase.containsKey(item.getItemID());
     }
@@ -68,7 +70,7 @@ public class Sale {
         total.calculateTotal(item);
     }
       /**
-     * Makes the instance into to a <code>String</code>
+     * Changes the instance into to a <code>String</code>
      *
      * @return The instance as a <code>String</code>
      */
@@ -93,14 +95,14 @@ public class Sale {
         return entries.iterator();
     }
     
-     private Item getCurrentItem(Iterator entriesIterator){
-        Map.Entry mapping = (Map.Entry) entriesIterator.next();
+     private Item getCurrentItem(Iterator entryIterator){
+        Map.Entry mapping = (Map.Entry) entryIterator.next();
         return (Item) mapping.getValue();
     }
      
-     private void addNewLine(StringBuilder builder, String line){
-        builder.append(line);
-        builder.append("\n");
+     private void addNewLine(StringBuilder str, String line){
+        str.append(line);
+        str.append("\n");
     }
      
 }

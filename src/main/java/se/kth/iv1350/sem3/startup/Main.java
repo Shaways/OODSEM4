@@ -13,18 +13,24 @@ import se.kth.iv1350.sem3.view.View;
  *
  */
 
+/**
+ * Contains the main method.
+ * Performs startup of the application.
+ */
+
 public class Main {
- /**
-     * Starts the whole program.
-     *
-     * @param args The application does not take any command line parameters.
+
+    /**
+     * main starts application.
      */
+    
     public static void main(String[] args) {
-        SystemCreator systemCreator = new SystemCreator();
-        ArchiveCreator archCreator = new ArchiveCreator();
-        Printer print = new Printer();
-        Controller contr = new Controller(systemCreator, archCreator, print);
-        View view = new View(contr);
+        SystemCreator systemCreator = SystemCreator.getSystemCreator();
+        ArchiveCreator catalogCreator = ArchiveCreator.getArchiveCreator();
+        Printer printer = Printer.getPrinter();
+        Controller controller = new Controller(systemCreator, catalogCreator, printer);
+        View view = new View(controller);
         view.fakeExecution();
+        
     }
 }

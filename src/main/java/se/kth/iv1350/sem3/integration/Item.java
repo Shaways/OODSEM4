@@ -9,7 +9,7 @@ public class Item {
     private String itemID;
     
     /**
-     * Creates a new instance that is represented as Item.
+     * Makes a new instance that is represented as Item.
      * 
      * @param itemQuantity The quantity of Items.
      * @param itemDescription Info about Item.
@@ -54,17 +54,18 @@ public class Item {
     public String getItemID() {
         return itemID;
     }
+    
     @Override
     public String toString() {
         String string = ("Item ID: " + itemID) +
                 ("Item quantity: " + itemQuantity.toString()) +
-                ("item description: " + itemDescription.toString());
+                ("Item description: " + itemDescription.toString());
         return string;
     }
     /**
-     * Two <code>Item</code> instances are equal if all fields are equal except the quantity.
+     * Two item instances are equal if all fields are equal exclusive the quantity.
      *
-     * @param obj The <code>Item</code> to compare with this <code>Item</code>.
+     * @param obj Is the item to compare with this item.
      * @return <code>true</code> if all fields in the specified <code>Item</code> are equal to
      *         corresponding fields in this <code>Item</code> except quantity, <code>false</code> if they are not.
      */
